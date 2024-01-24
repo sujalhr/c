@@ -1,0 +1,87 @@
+#include <stdio.h> 
+#include <stdlib.h>
+#include <string.h>
+
+struct Day
+ {
+char *dayName;
+ int date;
+char *activityDescription;
+};
+
+struct Day* create()
+ {
+struct Day *newDay = malloc(sizeof(struct Day));
+ if (newDay == NULL) 
+{
+printf("Memory allocation failed.\n"); 
+exit(EXIT_FAILURE);
+}
+newDay->dayName = malloc(20);
+ if (newDay->dayName == NULL)
+ {
+printf("Memory allocation failed.\n");
+ exit(EXIT_FAILURE);
+}
+newDay->activityDescription = malloc(100); 
+if (newDay->activityDescription == NULL)
+ { 
+printf("Memory allocation failed.\n");
+exit(EXIT_FAILURE);
+}
+return newDay;
+}
+
+
+void read(struct Day *day) 
+{
+ printf("Enter day name: "); 
+scanf("%s", day->dayName);
+printf("Enter date: ");
+scanf("%d", &day->date);
+while (getchar() != '\n');
+ printf("Enter activity description: ");
+fgets(day->activityDescription, 100, stdin);
+day->activityDescription[strcspn(day->activityDescription, "\n")] = '\0'; // “complementary span”
+}
+
+void display(const struct Day *day) 
+{
+printf("Day: %s\n Date: %d\n Activity: %s\n", day->dayName, 
+day->date, day->activityDescription);
+ printf("	\n");
+}
+
+void freeDay(struct Day *day)
+ { 
+free(day->dayName);
+free(day->activityDescription);
+ free(day);
+}
+
+int main()
+ {
+const int daysPerWeek = 7;
+struct Day *myCalendar[daysPerWeek];
+ int month, year;
+printf("Enter month(1-12): ");
+ scanf("%d", &month); 
+printf("Enter year: "); 
+scanf("%d",&year);
+for (int i = 0; i < daysPerWeek; ++i)
+ { 
+myCalendar[i] = create();
+printf("Enter details for Day %d:\n", i + 1);
+ read(myCalendar[i]);
+}
+
+
+
+printf("\nCalendar Details for the month %d in year %d:\n",month,year); 
+for (int i = 0; i < daysPerWeek; ++i) 
+{
+display(myCalendar[i]); 
+freeDay(myCalendar[i]);
+}
+return 0;
+}
