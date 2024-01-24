@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<string.h>
+
+void findandreplace(char[],char[],char[]);
+
+main()
+{
+	char str[100],pat[100],rep[100];
+    printf("\nEnter Main string \n");
+	gets(str);
+	printf("\nEnter the string to be searched \n");
+	gets(pat);
+	printf("\nEnter the string to be replaced \n");
+	gets(rep);
+  findandreplace(str,pat,rep);
+}
+
+void findandreplace(char str[100],char pat[100],char rep[100])
+{
+	int i,j,c,m,k,found=0;
+	char res[100];
+	i=m=c=j=0;
+	while(str[c]!='\0')
+	{
+		if(str[m]==pat[i])	// Character Matched
+		{
+			i++; m++; 
+			if(pat[i]=='\0')	//Pattern Found
+			{
+				found=1;
+				printf("Pattern found at %d\n",c);
+				for(k=0;rep[k]!='\0';k++,j++) 
+				// Copy Replace String in result String
+				{
+					res[j]=rep[k];
+				}
+					i=0;
+				c=m;
+			} }
+		else	//Pattern Not Found
+		{
+			res[j] = str[c];
+			j++; c++;
+			m=c;
+			i=0;
+		}
+	} // end while
+	res[j]='\0';
+	if(found)
+	{
+	printf("\nThe resultant string is:\n%s\n" ,res);
+	}
+	else
+		printf("Pattern not found\n");
+}
+
