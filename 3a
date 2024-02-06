@@ -1,1 +1,57 @@
-
+#include<stdio.h> #include<math.h>
+int op1,op2,res,i,top=-1,s[10],ele,n; void push(int ele)
+{
+top++; s[top]=ele;
+}
+int pop()
+{
+int ele; ele=s[top]; top--; return(ele);
+}
+void eval()
+{
+int e;
+char postfix[20],ch;
+printf("enter the postfix exp\n"); scanf("%s",postfix);
+for(i=0;postfix[i]!='\0';i++)
+{
+ch=postfix[i]; if(isdigit(ch)) push(ch-'0'); else
+{
+op2=pop(); op1=pop();
+switch(ch)
+{
+case '+':res=op1+op2;
+break; case '-':res=op1-op2;
+break; case '*':res=op1*op2;
+break;
+case '/':res=op1/op2;
+break;
+case '^':res=pow(op1,op2); break;
+}
+push(res);
+}
+}
+printf("result of postfix exp %d",res);
+}
+void tow(int n,char s,char t,char d)
+{
+if(n==1)
+{
+printf(“move disk 1 from %c to %c”,s,d); return;
+}
+tow(n-1,s,d,t);
+printf(“move disk %d from %c to %c”,n,s,d); tow(n-1,t,s,d);
+}
+void main()
+{
+int ch; do
+{
+printf(“1:evaluation of postfix expression 2:Tower of Hanoi”); printf(“enter your choice\n”);
+scanf(“%d”,&ch);
+switch(ch)
+{
+case 1: eval();
+break; case 2: tow();
+break;
+}
+}while(ch<=2);
+}
