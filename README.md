@@ -1,1 +1,2 @@
-practice C programs
+DSA VTU Lab Programs 
+C language 
